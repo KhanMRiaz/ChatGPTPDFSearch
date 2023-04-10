@@ -23,7 +23,7 @@ export default function Index() {
 
   const onSubmit = async (values) => {
     setSubmittingQuestion(true)
-    const res = await fetch(`http://ec2-3-15-180-245.us-east-2.compute.amazonaws.com/api/ask-chatgpt?question=${values.question}`)
+    const res = await fetch(`https://ec2-3-21-171-111.us-east-2.compute.amazonaws.com/api/ask-chatgpt?question=${values.question}`)
     setSubmittingQuestion(false)
     const answer =  await res.json() 
     setAnswer(answer[0])
@@ -40,28 +40,16 @@ export default function Index() {
     setUploadingPDF(true)
     const fd = new FormData();
     fd.append("file", fileValue);
-    let response = await fetch('http://ec2-3-15-180-245.us-east-2.compute.amazonaws.com/api/upload', {
+    await fetch('https://ec2-3-21-171-111.us-east-2.compute.amazonaws.com/api/upload', {
       method: 'POST',
       body: fd
     });
-
-    let res = await response.json();
-    // const res = await fetch('http://localhost:8080/api/upload', {
-    //   Method: 'POST',
-    //   Headers: {
-    //     Accept: 'application.json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   Body: fileValue,
-    //   Cache: 'default'
-    // })
     setUploadingPDF(false)
-    console.log('res: ',res)
+    setFileValue(null)
   }
 
   return (
     <Box maw={900} mx="auto" mt={20}>
-
       <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
         <TextInput
           radius='sm'
@@ -71,12 +59,10 @@ export default function Index() {
           placeholder="Ask me anything"
           {...form.getInputProps('question')}
         />
-
         <Group position="right" mt="md">
         <Button variant='outline' radius='sm' onClick={()=>onClear()}>Clear</Button>
           <Button type="submit" radius='sm' loading={submittingQuestion}>Submit</Button>
         </Group>
-
       </form>
 
       {answer.length > 0 && <Card shadow="sm" padding="sm" radius="md" withBorder maw={500}>
