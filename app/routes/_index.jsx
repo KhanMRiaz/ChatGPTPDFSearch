@@ -23,7 +23,7 @@ export default function Index() {
 
   const onSubmit = async (values) => {
     setSubmittingQuestion(true)
-    const res = await fetch(`https://ec2-3-21-171-111.us-east-2.compute.amazonaws.com/api/ask-chatgpt?question=${values.question}`)
+    const res = await fetch(`https://chatgptpoc.eastmanenterprises.com/api/ask-chatgpt?question=${values.question}`)
     setSubmittingQuestion(false)
     const answer =  await res.json() 
     setAnswer(answer[0])
@@ -40,7 +40,7 @@ export default function Index() {
     setUploadingPDF(true)
     const fd = new FormData();
     fd.append("file", fileValue);
-    await fetch('https://ec2-3-21-171-111.us-east-2.compute.amazonaws.com/api/upload', {
+    await fetch('https://chatgptpoc.eastmanenterprises.com/api/upload', {
       method: 'POST',
       body: fd
     });
