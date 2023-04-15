@@ -23,7 +23,7 @@ export default function Index() {
 
   const onSubmit = async (values) => {
     setSubmittingQuestion(true)
-    const res = await fetch(`https://chatgptpoc.eastmanenterprises.com/api/ask-chatgpt?question=${values.question}&temprature=${localStorage.getItem('temprature')}`)
+    const res = await fetch(`https://chatgptpoc.eastmanenterprises.com/api/ask-chatgpt?question=${values.question}&temperature=${localStorage.getItem('temperature')}`)
     setSubmittingQuestion(false)
     const answer =  await res.json() 
     setAnswer(answer[0])
@@ -60,7 +60,7 @@ export default function Index() {
           {...form.getInputProps('question')}
         />
         <Group position="right" mt="md">
-          <Select placeholder="Select Temprature"
+          <Select placeholder="Select Temperature"
             data={[
               { value: 0, label: '0' },
               { value: 0.1, label: '0.1' },
@@ -74,7 +74,7 @@ export default function Index() {
               { value: 0.9, label: '0.9' },
               { value: 1, label: '1' },
             ]}
-            onSelect={(v)=>localStorage.setItem('temprature',v.target.value)}
+            onSelect={(v)=>localStorage.setItem('temperature',v.target.value)}
           />
           <Button variant='outline' radius='sm' onClick={()=>onClear()}>Clear</Button>
           <Button type="submit" radius='sm' loading={submittingQuestion}>Submit</Button>
